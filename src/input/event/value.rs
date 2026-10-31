@@ -507,6 +507,24 @@ impl InputValue {
                         Capability::Accelerometer(_) => Err(TranslationError::NotImplemented),
                     },
                     Touch::Button(_) => self.translate_touch_button(target_cap, target_config),
+<<<<<<< Updated upstream
+=======
+                    Touch::BlobId
+                    | Touch::Distance
+                    | Touch::Orientation
+                    | Touch::PositionX
+                    | Touch::PositionY
+                    | Touch::Pressure
+                    | Touch::Slot
+                    | Touch::ToolType
+                    | Touch::ToolX
+                    | Touch::ToolY
+                    | Touch::Major
+                    | Touch::Minor
+                    | Touch::TrackingId
+                    | Touch::WidthMajor
+                    | Touch::WidthMinor => self.translate_touch_code(touch, target_cap),
+>>>>>>> Stashed changes
                 },
                 // RightPad -> ...
                 Touchpad::RightPad(touch) => match touch {
@@ -567,6 +585,24 @@ impl InputValue {
                         Capability::Accelerometer(_) => Err(TranslationError::NotImplemented),
                     },
                     Touch::Button(_) => self.translate_touch_button(target_cap, target_config),
+<<<<<<< Updated upstream
+=======
+                    Touch::BlobId
+                    | Touch::Distance
+                    | Touch::Orientation
+                    | Touch::PositionX
+                    | Touch::PositionY
+                    | Touch::Pressure
+                    | Touch::Slot
+                    | Touch::ToolType
+                    | Touch::ToolX
+                    | Touch::ToolY
+                    | Touch::Major
+                    | Touch::Minor
+                    | Touch::TrackingId
+                    | Touch::WidthMajor
+                    | Touch::WidthMinor => self.translate_touch_code(touch, target_cap),
+>>>>>>> Stashed changes
                 },
                 // CenterPad -> ...
                 Touchpad::CenterPad(touch) => match touch {
@@ -627,6 +663,24 @@ impl InputValue {
                         Capability::Accelerometer(_) => Err(TranslationError::NotImplemented),
                     },
                     Touch::Button(_) => self.translate_touch_button(target_cap, target_config),
+<<<<<<< Updated upstream
+=======
+                    Touch::BlobId
+                    | Touch::Distance
+                    | Touch::Orientation
+                    | Touch::PositionX
+                    | Touch::PositionY
+                    | Touch::Pressure
+                    | Touch::Slot
+                    | Touch::ToolType
+                    | Touch::ToolX
+                    | Touch::ToolY
+                    | Touch::Major
+                    | Touch::Minor
+                    | Touch::TrackingId
+                    | Touch::WidthMajor
+                    | Touch::WidthMinor => self.translate_touch_code(touch, target_cap),
+>>>>>>> Stashed changes
                 },
             },
 
@@ -693,6 +747,24 @@ impl InputValue {
                 },
                 // Touchscreen Button -> ...
                 Touch::Button(_) => self.translate_touch_button(target_cap, target_config),
+<<<<<<< Updated upstream
+=======
+                Touch::BlobId
+                | Touch::Distance
+                | Touch::Orientation
+                | Touch::PositionX
+                | Touch::PositionY
+                | Touch::Pressure
+                | Touch::Slot
+                | Touch::ToolType
+                | Touch::ToolX
+                | Touch::ToolY
+                | Touch::Major
+                | Touch::Minor
+                | Touch::TrackingId
+                | Touch::WidthMajor
+                | Touch::WidthMinor => self.translate_touch_code(touch, target_cap),
+>>>>>>> Stashed changes
             },
             Capability::Gyroscope(_) => Err(TranslationError::NotImplemented),
             Capability::Accelerometer(_) => Err(TranslationError::NotImplemented),

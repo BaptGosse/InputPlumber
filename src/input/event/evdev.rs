@@ -1,3 +1,4 @@
+pub mod maps;
 pub mod translator;
 
 use std::collections::HashMap;
@@ -9,9 +10,10 @@ use crate::input::capability::{
     MouseButton, Touch, TouchButton, Touchpad,
 };
 
-use crate::input::source::EventCapability;
+use super::{native::NativeEvent, value::InputValue, EventCapability};
 
-use super::{native::NativeEvent, value::InputValue};
+/// A raw evdev (event type, event code) pair.
+pub(super) type EventSignature = (u16, u16);
 
 #[derive(Debug, Clone)]
 pub struct EvdevEvent {
@@ -137,6 +139,11 @@ impl EvdevEvent {
     /// minimum and maximum values.
     pub fn set_abs_info(&mut self, info: AbsInfo) {
         self.abs_info = Some(info)
+    }
+
+    /// Returns the raw (event type, event code) pair identifying this event.
+    pub fn signature(&self) -> EventSignature {
+        (self.event.event_type().0, self.event.code())
     }
 
     /// Returns the event as a evdev [InputEvent]
@@ -482,7 +489,48 @@ impl EventCapability for EvdevEvent {
                 AbsoluteAxisCode::ABS_HAT0Y => {
                     Capability::Gamepad(Gamepad::Axis(GamepadAxis::Hat0))
                 }
+<<<<<<< Updated upstream
                 _ => Capability::NotImplemented,
+=======
+                AbsoluteAxisCode::ABS_HAT1X | AbsoluteAxisCode::ABS_HAT1Y => {
+                    Capability::Gamepad(Gamepad::Axis(GamepadAxis::Hat1))
+                }
+                AbsoluteAxisCode::ABS_HAT2X | AbsoluteAxisCode::ABS_HAT2Y => {
+                    Capability::Gamepad(Gamepad::Axis(GamepadAxis::Hat2))
+                }
+                AbsoluteAxisCode::ABS_HAT3X | AbsoluteAxisCode::ABS_HAT3Y => {
+                    Capability::Gamepad(Gamepad::Axis(GamepadAxis::Hat3))
+                }
+                AbsoluteAxisCode::ABS_THROTTLE => {
+                    Capability::Gamepad(Gamepad::Axis(GamepadAxis::Throttle))
+                }
+                AbsoluteAxisCode::ABS_RUDDER => {
+                    Capability::Gamepad(Gamepad::Axis(GamepadAxis::Rudder))
+                }
+                AbsoluteAxisCode::ABS_WHEEL => {
+                    Capability::Gamepad(Gamepad::Axis(GamepadAxis::Wheel))
+                }
+                AbsoluteAxisCode::ABS_GAS => Capability::Gamepad(Gamepad::Axis(GamepadAxis::Gas)),
+                AbsoluteAxisCode::ABS_BRAKE => {
+                    Capability::Gamepad(Gamepad::Axis(GamepadAxis::Brake))
+                }
+                AbsoluteAxisCode::ABS_MT_SLOT => Capability::Touchscreen(Touch::Slot),
+                AbsoluteAxisCode::ABS_MT_TOUCH_MAJOR => Capability::Touchscreen(Touch::Major),
+                AbsoluteAxisCode::ABS_MT_TOUCH_MINOR => Capability::Touchscreen(Touch::Minor),
+                AbsoluteAxisCode::ABS_MT_WIDTH_MAJOR => Capability::Touchscreen(Touch::WidthMajor),
+                AbsoluteAxisCode::ABS_MT_WIDTH_MINOR => Capability::Touchscreen(Touch::WidthMinor),
+                AbsoluteAxisCode::ABS_MT_ORIENTATION => Capability::Touchscreen(Touch::Orientation),
+                AbsoluteAxisCode::ABS_MT_POSITION_X => Capability::Touchscreen(Touch::PositionX),
+                AbsoluteAxisCode::ABS_MT_POSITION_Y => Capability::Touchscreen(Touch::PositionY),
+                AbsoluteAxisCode::ABS_MT_TOOL_TYPE => Capability::Touchscreen(Touch::ToolType),
+                AbsoluteAxisCode::ABS_MT_BLOB_ID => Capability::Touchscreen(Touch::BlobId),
+                AbsoluteAxisCode::ABS_MT_TRACKING_ID => Capability::Touchscreen(Touch::TrackingId),
+                AbsoluteAxisCode::ABS_MT_PRESSURE => Capability::Touchscreen(Touch::Pressure),
+                AbsoluteAxisCode::ABS_MT_DISTANCE => Capability::Touchscreen(Touch::Distance),
+                AbsoluteAxisCode::ABS_MT_TOOL_X => Capability::Touchscreen(Touch::ToolX),
+                AbsoluteAxisCode::ABS_MT_TOOL_Y => Capability::Touchscreen(Touch::ToolY),
+                _ => Capability::Gamepad(Gamepad::Axis(GamepadAxis::Raw(code))),
+>>>>>>> Stashed changes
             },
             EventType::RELATIVE => match RelativeAxisCode(code) {
                 RelativeAxisCode::REL_X => Capability::Mouse(Mouse::Motion),
@@ -548,7 +596,7 @@ impl EvdevEvent {
     /// All (event type, code) pairs that fulfill this capability, in the
     /// order evdev events should be written. Capabilities without an evdev
     /// equivalent return an empty list.
-    fn event_codes(capability: &Capability) -> Vec<(EventType, u16)> {
+    pub fn event_codes(capability: &Capability) -> Vec<(EventType, u16)> {
         match capability {
             Capability::None
             | Capability::NotImplemented
@@ -868,10 +916,26 @@ impl EvdevEvent {
                 abs_event(AbsoluteAxisCode::ABS_MT_POSITION_X.0),
                 abs_event(AbsoluteAxisCode::ABS_MT_POSITION_Y.0),
             ],
+<<<<<<< Updated upstream
             Touch::Button(button) => match button {
                 TouchButton::Touch => vec![key_event(KeyCode::BTN_TOUCH.0)],
                 TouchButton::Press => vec![key_event(KeyCode::BTN_LEFT.0)],
             },
+=======
+            Touch::Orientation => vec![abs_event(AbsoluteAxisCode::ABS_MT_ORIENTATION.0)],
+            Touch::PositionX => vec![abs_event(AbsoluteAxisCode::ABS_MT_POSITION_X.0)],
+            Touch::PositionY => vec![abs_event(AbsoluteAxisCode::ABS_MT_POSITION_Y.0)],
+            Touch::Pressure => vec![abs_event(AbsoluteAxisCode::ABS_MT_PRESSURE.0)],
+            Touch::Slot => vec![abs_event(AbsoluteAxisCode::ABS_MT_SLOT.0)],
+            Touch::ToolType => vec![abs_event(AbsoluteAxisCode::ABS_MT_TOOL_TYPE.0)],
+            Touch::ToolX => vec![abs_event(AbsoluteAxisCode::ABS_MT_TOOL_X.0)],
+            Touch::ToolY => vec![abs_event(AbsoluteAxisCode::ABS_MT_TOOL_Y.0)],
+            Touch::Major => vec![abs_event(AbsoluteAxisCode::ABS_MT_TOUCH_MAJOR.0)],
+            Touch::Minor => vec![abs_event(AbsoluteAxisCode::ABS_MT_TOUCH_MINOR.0)],
+            Touch::TrackingId => vec![abs_event(AbsoluteAxisCode::ABS_MT_TRACKING_ID.0)],
+            Touch::WidthMajor => vec![abs_event(AbsoluteAxisCode::ABS_MT_WIDTH_MAJOR.0)],
+            Touch::WidthMinor => vec![abs_event(AbsoluteAxisCode::ABS_MT_WIDTH_MINOR.0)],
+>>>>>>> Stashed changes
         }
     }
 
@@ -1036,7 +1100,7 @@ fn input_event_from_value(
 /// Normalizes the given value from a real value with axis information into a range
 /// between -1.0 - 1.0, indicating how far the axis has been pressed towards its
 /// minimum and maximum values.
-fn normalize_signed_value(raw_value: i32, min: i32, max: i32) -> f64 {
+pub(crate) fn normalize_signed_value(raw_value: i32, min: i32, max: i32) -> f64 {
     let mid = (max + min) / 2;
     let event_value = raw_value - mid;
 
@@ -1058,7 +1122,7 @@ fn normalize_signed_value(raw_value: i32, min: i32, max: i32) -> f64 {
 
 /// Returns a value between 0.0 and 1.0 based on the given value with its
 /// minimum and maximum.
-fn normalize_unsigned_value(raw_value: i32, min: i32, max: i32) -> f64 {
+pub(crate) fn normalize_unsigned_value(raw_value: i32, min: i32, max: i32) -> f64 {
     let range = max - min;
     if range == 0 {
         return 0.0;

@@ -1350,15 +1350,55 @@ impl FromStr for Touchpad {
 
 #[derive(Clone, Debug, PartialEq, Eq, Hash)]
 pub enum Touch {
+<<<<<<< Updated upstream
     Motion,
     Button(TouchButton),
+=======
+    BlobId,
+    Button(TouchButton),
+    Distance,
+    Major,
+    Minor,
+    Motion,
+    Orientation,
+    PositionX,
+    PositionY,
+    Pressure,
+    Slot,
+    ToolType,
+    ToolX,
+    ToolY,
+    TrackingId,
+    WidthMajor,
+    WidthMinor,
+>>>>>>> Stashed changes
 }
 
 impl fmt::Display for Touch {
     fn fmt(&self, f: &mut fmt::Formatter) -> fmt::Result {
         match self {
+<<<<<<< Updated upstream
             Touch::Motion => write!(f, "Motion"),
             Touch::Button(_) => write!(f, "Button"),
+=======
+            Touch::BlobId => write!(f, "BlobId"),
+            Touch::Button(touch_button) => write!(f, "Button:{touch_button}"),
+            Touch::Distance => write!(f, "Distance"),
+            Touch::Major => write!(f, "Major"),
+            Touch::Minor => write!(f, "Minor"),
+            Touch::Motion => write!(f, "Motion"),
+            Touch::Orientation => write!(f, "Orientation"),
+            Touch::PositionX => write!(f, "PositionX"),
+            Touch::PositionY => write!(f, "PositionY"),
+            Touch::Pressure => write!(f, "Pressure"),
+            Touch::Slot => write!(f, "Slot"),
+            Touch::ToolType => write!(f, "ToolType"),
+            Touch::ToolX => write!(f, "ToolX"),
+            Touch::ToolY => write!(f, "ToolY"),
+            Touch::TrackingId => write!(f, "TrackingId"),
+            Touch::WidthMajor => write!(f, "WidthMajor"),
+            Touch::WidthMinor => write!(f, "WidthMinor"),
+>>>>>>> Stashed changes
         }
     }
 }
@@ -1375,6 +1415,24 @@ impl FromStr for Touch {
             "Button" => Ok(Touch::Button(TouchButton::from_str(
                 parts.join(":").as_str(),
             )?)),
+<<<<<<< Updated upstream
+=======
+            "Distance" => Ok(Touch::Distance),
+            "Major" => Ok(Touch::Major),
+            "Minor" => Ok(Touch::Minor),
+            "Motion" => Ok(Touch::Motion),
+            "Orientation" => Ok(Touch::Orientation),
+            "PositionX" => Ok(Touch::PositionX),
+            "PositionY" => Ok(Touch::PositionY),
+            "Pressure" => Ok(Touch::Pressure),
+            "Slot" => Ok(Touch::Slot),
+            "ToolType" => Ok(Touch::ToolType),
+            "ToolX" => Ok(Touch::ToolX),
+            "ToolY" => Ok(Touch::ToolY),
+            "TrackingId" => Ok(Touch::TrackingId),
+            "WidthMajor" => Ok(Touch::WidthMajor),
+            "WidthMinor" => Ok(Touch::WidthMinor),
+>>>>>>> Stashed changes
             _ => Err(()),
         }
     }
